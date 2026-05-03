@@ -1,0 +1,190 @@
+import { Link } from "react-router-dom";
+import { Button } from "../components/ui/button";
+import { ArrowRight, Link2, BarChart3, Target, ShieldCheck, Globe2, Zap, Check } from "lucide-react";
+
+const features = [
+  { icon: Link2, title: "Smart link tracking", desc: "Generate trackable short links with auto-appended UTMs. Every click is captured with device, country and referrer." },
+  { icon: BarChart3, title: "Clean, crisp charts", desc: "Combo charts for visits vs. conversions. KPI tiles for visits, people, revenue, CPA and more — no clutter." },
+  { icon: Target, title: "Conversion goals", desc: "Define goals, drop a pixel, and attribute revenue back to the exact click and campaign." },
+  { icon: ShieldCheck, title: "Fraud detection", desc: "Score every click in real time. Filter bots, crawlers and repeat offenders from your real traffic." },
+  { icon: Globe2, title: "Geography & device", desc: "See traffic by country, device, browser and OS — all out of the box, no setup." },
+  { icon: Zap, title: "Built for speed", desc: "302 redirects in milliseconds. Your users never wait." },
+];
+
+const plans = [
+  { id: "free", name: "Free", price: 0, desc: "For kicking the tires", features: ["100 clicks / mo", "1 campaign", "Basic analytics"] },
+  { id: "starter", name: "Starter", price: 29, desc: "For indie marketers", features: ["10,000 clicks / mo", "5 campaigns", "Conversion goals", "Email support"] },
+  { id: "pro", name: "Pro", price: 79, popular: true, desc: "For growing teams", features: ["100,000 clicks / mo", "Unlimited campaigns", "Fraud detection", "Priority support", "API access"] },
+  { id: "business", name: "Business", price: 179, desc: "For serious operators", features: ["1,000,000 clicks / mo", "Team seats", "Custom domains", "Dedicated support"] },
+];
+
+export default function Landing() {
+  return (
+    <div className="min-h-screen bg-white text-zinc-900" data-testid="landing-page">
+      {/* Nav */}
+      <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/80 backdrop-blur">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2" data-testid="logo-link">
+            <div className="w-8 h-8 rounded-md bg-zinc-950 text-white grid place-items-center font-heading font-bold">L</div>
+            <span className="font-heading font-semibold text-lg tracking-tight">Linkly</span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-8 text-sm text-zinc-600">
+            <a href="#features" className="hover:text-zinc-900" data-testid="nav-features">Features</a>
+            <a href="#pricing" className="hover:text-zinc-900" data-testid="nav-pricing">Pricing</a>
+            <Link to="/login" className="hover:text-zinc-900" data-testid="nav-signin">Sign in</Link>
+          </nav>
+          <Link to="/login" data-testid="nav-get-started">
+            <Button className="bg-zinc-950 hover:bg-zinc-800 rounded-md">Get started</Button>
+          </Link>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 hero-grid pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24 lg:py-32 relative">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600 mb-6 animate-fade-up">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> New · Fraud score on every click
+            </div>
+            <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-zinc-950 animate-fade-up">
+              Tracking links and conversions,<br />
+              <span className="text-zinc-500">finally</span> easy to read.
+            </h1>
+            <p className="mt-6 text-lg text-zinc-600 leading-relaxed max-w-2xl animate-fade-up" style={{ animationDelay: "80ms" }}>
+              Linkly shortens your links, watches every click, and attributes every conversion back to the exact campaign — with clean charts you'll actually want to share in the standup.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3 animate-fade-up" style={{ animationDelay: "160ms" }}>
+              <Link to="/login" data-testid="hero-cta-primary">
+                <Button size="lg" className="bg-zinc-950 hover:bg-zinc-800 h-11 px-6">
+                  Start for free <ArrowRight className="ml-1 h-4 w-4" />
+                </Button>
+              </Link>
+              <a href="#pricing" data-testid="hero-cta-pricing">
+                <Button size="lg" variant="outline" className="h-11 px-6 border-zinc-300">See pricing</Button>
+              </a>
+            </div>
+            <p className="mt-4 text-xs text-zinc-500">No credit card required · 100 free clicks every month</p>
+          </div>
+
+          {/* Dashboard preview */}
+          <div className="mt-16 relative rounded-xl border border-zinc-200 bg-white shadow-xl shadow-zinc-900/5 overflow-hidden animate-fade-up" style={{ animationDelay: "240ms" }}>
+            <div className="flex items-center gap-1.5 border-b border-zinc-200 bg-zinc-50 px-4 py-2.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
+              <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
+              <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
+              <div className="ml-3 text-xs text-zinc-500 font-mono">app.linkly.io/dashboard</div>
+            </div>
+            <div className="p-6 grid grid-cols-2 md:grid-cols-5 gap-3">
+              {[
+                { l: "People", v: "15,257" }, { l: "Visits", v: "33,025" }, { l: "Conversions", v: "719" }, { l: "Conv. Rate", v: "4.1%" }, { l: "Revenue", v: "$41,452" },
+              ].map((k) => (
+                <div key={k.l} className="rounded-lg border border-zinc-200 p-4 bg-white">
+                  <div className="text-xs uppercase tracking-[0.15em] text-zinc-500">{k.l}</div>
+                  <div className="font-heading font-semibold text-2xl mt-1 text-zinc-950">{k.v}</div>
+                </div>
+              ))}
+            </div>
+            <div className="px-6 pb-6">
+              <div className="h-56 rounded-lg border border-zinc-200 bg-gradient-to-b from-white to-zinc-50 p-4 flex items-end gap-2">
+                {Array.from({ length: 30 }).map((_, i) => {
+                  const h = 20 + ((i * 37) % 80);
+                  return <div key={i} className="flex-1 rounded-sm bg-blue-600/90" style={{ height: `${h}%` }} />;
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section id="features" className="border-t border-zinc-200 bg-zinc-50/50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24">
+          <div className="max-w-2xl">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">Everything you need</div>
+            <h2 className="font-heading font-semibold text-3xl lg:text-4xl tracking-tight mt-3">
+              A complete toolkit for link & conversion tracking
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+            {features.map((f) => (
+              <div key={f.title} className="rounded-lg border border-zinc-200 bg-white p-6 hover:border-zinc-300 transition-colors" data-testid={`feature-${f.title.replace(/\s+/g, "-").toLowerCase()}`}>
+                <div className="w-10 h-10 rounded-md bg-zinc-950 text-white grid place-items-center">
+                  <f.icon className="h-5 w-5" />
+                </div>
+                <h3 className="font-heading font-medium text-lg mt-4">{f.title}</h3>
+                <p className="text-sm text-zinc-600 mt-2 leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section id="pricing" className="border-t border-zinc-200">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24">
+          <div className="max-w-2xl">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">Pricing</div>
+            <h2 className="font-heading font-semibold text-3xl lg:text-4xl tracking-tight mt-3">Pay for the traffic you track</h2>
+            <p className="text-zinc-600 mt-3">Start free. Upgrade the minute you need more. Cancel any time.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+            {plans.map((p) => (
+              <div
+                key={p.id}
+                className={`rounded-lg border p-6 bg-white flex flex-col ${p.popular ? "border-zinc-950 ring-1 ring-zinc-950 relative" : "border-zinc-200"}`}
+                data-testid={`pricing-card-${p.id}`}
+              >
+                {p.popular && (
+                  <div className="absolute -top-3 left-6 rounded-full bg-zinc-950 text-white text-xs px-2.5 py-0.5 font-medium">Most popular</div>
+                )}
+                <div className="font-heading font-medium text-lg">{p.name}</div>
+                <div className="text-sm text-zinc-500">{p.desc}</div>
+                <div className="mt-5 flex items-end gap-1">
+                  <div className="font-heading font-bold text-4xl tracking-tight">${p.price}</div>
+                  <div className="text-sm text-zinc-500 mb-1">/mo</div>
+                </div>
+                <ul className="mt-5 space-y-2 text-sm text-zinc-700 flex-1">
+                  {p.features.map((ft) => (
+                    <li key={ft} className="flex items-start gap-2">
+                      <Check className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                      <span>{ft}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/login" className="mt-6 block" data-testid={`pricing-cta-${p.id}`}>
+                  <Button
+                    className={`w-full ${p.popular ? "bg-zinc-950 hover:bg-zinc-800 text-white" : "bg-white text-zinc-950 border border-zinc-300 hover:bg-zinc-50"}`}
+                    variant={p.popular ? "default" : "outline"}
+                  >
+                    {p.price === 0 ? "Start free" : "Choose plan"}
+                  </Button>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="border-t border-zinc-200 bg-zinc-950 text-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-20 text-center">
+          <h2 className="font-heading font-semibold text-3xl lg:text-5xl tracking-tight">Know which links actually pay.</h2>
+          <p className="text-zinc-400 mt-4 max-w-xl mx-auto">Get your first trackable link in under 60 seconds.</p>
+          <Link to="/login" className="inline-block mt-8" data-testid="footer-cta">
+            <Button size="lg" className="bg-white text-zinc-950 hover:bg-zinc-100 h-11 px-6">
+              Sign in with Google <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      <footer className="border-t border-zinc-200 py-8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 text-sm text-zinc-500 flex items-center justify-between">
+          <span>© 2026 Linkly</span>
+          <span>Built on Emergent</span>
+        </div>
+      </footer>
+    </div>
+  );
+}
