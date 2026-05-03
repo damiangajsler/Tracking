@@ -5,7 +5,7 @@ import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Sparkles, TrendingUp, TrendingDown, ShieldAlert } from "lucide-react";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Line, LineChart, Legend, PieChart, Pie, Cell } from "recharts";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Area, AreaChart, Legend, PieChart, Pie, Cell } from "recharts";
 import { toast } from "sonner";
 
 const fmt = (n) => (n ?? 0).toLocaleString();
@@ -114,8 +114,18 @@ export default function Dashboard() {
         <div className="h-[260px] sm:h-[320px]">
           {hasData ? (
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data.series} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
-                <CartesianGrid vertical={false} stroke="#e4e4e7" strokeDasharray="3 3" />
+              <AreaChart data={data.series} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="visitsFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="convFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.25} />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid vertical={false} stroke="#f4f4f5" />
                 <XAxis
                   dataKey="date"
                   tickFormatter={(v) => {
@@ -127,15 +137,28 @@ export default function Dashboard() {
                   stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false}
                   minTickGap={20}
                 />
-                <YAxis yAxisId="l" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis yAxisId="r" orientation="right" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis yAxisId="l" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} width={36} />
+                <YAxis yAxisId="r" orientation="right" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} width={28} />
                 <Tooltip
-                  cursor={{ stroke: "#e4e4e7", strokeWidth: 1 }}
-                  contentStyle={{ borderRadius: 8, border: "1px solid #e4e4e7", fontSize: 12, boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
+                  cursor={{ stroke: "#e4e4e7", strokeWidth: 1, strokeDasharray: "3 3" }}
+                  contentStyle={{ borderRadius: 10, border: "1px solid #e4e4e7", fontSize: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.06)", padding: "8px 12px" }}
+                  labelStyle={{ color: "#71717a", marginBottom: 4 }}
                 />
-                <Line yAxisId="l" type="monotone" dataKey="visits" stroke="#2563eb" strokeWidth={2.5} dot={false} activeDot={false} />
-                <Line yAxisId="r" type="monotone" dataKey="conversions" stroke="#10b981" strokeWidth={2.5} dot={false} activeDot={false} />
-              </LineChart>
+                <Area
+                  yAxisId="l" type="monotone" dataKey="visits"
+                  stroke="#2563eb" strokeWidth={2.5}
+                  fill="url(#visitsFill)"
+                  dot={false}
+                  activeDot={{ r: 5, fill: "#2563eb", stroke: "#fff", strokeWidth: 2 }}
+                />
+                <Area
+                  yAxisId="r" type="monotone" dataKey="conversions"
+                  stroke="#10b981" strokeWidth={2.5}
+                  fill="url(#convFill)"
+                  dot={false}
+                  activeDot={{ r: 5, fill: "#10b981", stroke: "#fff", strokeWidth: 2 }}
+                />
+              </AreaChart>
             </ResponsiveContainer>
           ) : (
             <EmptyState onSeed={seed} seeding={seeding} />
