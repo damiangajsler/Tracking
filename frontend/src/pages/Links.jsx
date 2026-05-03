@@ -111,12 +111,13 @@ export default function Links() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-          <table className="w-full text-sm min-w-[560px]">
+          <table className="w-full text-sm min-w-[640px]">
             <thead>
               <tr className="border-b border-zinc-200 text-zinc-500 text-xs uppercase tracking-wider bg-zinc-50/50">
                 <th className="text-left px-4 py-3 font-medium">Short link</th>
                 <th className="text-left px-4 py-3 font-medium">Destination</th>
-                <th className="text-right px-4 py-3 font-medium">Clicks</th>
+                <th className="text-right px-4 py-3 font-medium">Total</th>
+                <th className="text-right px-4 py-3 font-medium">Unique</th>
                 <th className="text-right px-4 py-3 font-medium">Conv.</th>
                 <th className="text-right px-4 py-3 font-medium">Rate</th>
                 <th className="px-4 py-3" />
@@ -133,6 +134,7 @@ export default function Links() {
                     </td>
                     <td className="px-4 py-3 max-w-[360px] truncate text-zinc-700">{l.destination}</td>
                     <td className="px-4 py-3 text-right font-medium">{l.clicks}</td>
+                    <td className="px-4 py-3 text-right text-zinc-700">{l.unique_clicks ?? 0}</td>
                     <td className="px-4 py-3 text-right">{l.conversions}</td>
                     <td className="px-4 py-3 text-right text-zinc-500">{rate}%</td>
                     <td className="px-4 py-3">

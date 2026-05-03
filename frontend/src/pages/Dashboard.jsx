@@ -80,8 +80,8 @@ export default function Dashboard() {
 
       {/* KPIs row 1 */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-3 sm:mb-4">
-        <KpiTile label="People" value={fmt(k?.people)} />
-        <KpiTile label="Visits" value={fmt(k?.visits)} />
+        <KpiTile label="Total Clicks" value={fmt(k?.visits)} />
+        <KpiTile label="Unique Clicks" value={fmt(k?.people)} />
         <KpiTile label="Conversions" value={fmt(k?.conversions)} />
         <KpiTile label="Conv. Rate" value={`${k?.conversion_rate ?? 0}%`} />
         <KpiTile label="Revenue" value={fmtMoney(k?.revenue)} />
@@ -107,7 +107,7 @@ export default function Dashboard() {
             <div className="font-heading text-lg font-medium mt-0.5">Visits & conversions</div>
           </div>
           <div className="flex gap-4 text-xs text-zinc-600">
-            <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-blue-600 rounded-full" /> Visits</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-blue-600 rounded-full" /> Total clicks</span>
             <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-emerald-500 rounded-full" /> Conversions</span>
           </div>
         </div>

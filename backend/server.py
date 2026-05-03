@@ -256,6 +256,17 @@ async def delete_project(project_id: str, user: User = Depends(get_current_user)
 @api_router.get("/links")
 async def list_links(user: User = Depends(get_current_user)):
     items = await db.links.find({"user_id": user.user_id}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    # compute unique clicks per link via aggregation
+    pipeline = [
+        {"$match": {"user_id": user.user_id}},
+        {"$group": {"_id": {"link_id": "$link_id", "ip": "$ip"}}},
+        {"$group": {"_id": "$_id.link_id", "unique_clicks": {"$sum": 1}}},
+    ]
+    uniq_map = {}
+    async for doc in db.clicks.aggregate(pipeline):
+        uniq_map[doc["_id"]] = doc["unique_clicks"]
+    for it in items:
+        it["unique_clicks"] = uniq_map.get(it["link_id"], 0)
     return items
 
 @api_router.post("/links")
