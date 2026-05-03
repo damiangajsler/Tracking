@@ -1,0 +1,90 @@
+{
+  "theme": "light",
+  "archetype": "4 (Swiss & High-Contrast)",
+  "typography": {
+    "heading_font": "Outfit",
+    "body_font": "Manrope",
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none font-bold",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight leading-none font-semibold",
+      "h3": "text-xl sm:text-2xl tracking-tight font-medium",
+      "h4": "text-lg sm:text-xl font-medium",
+      "body": "text-base leading-relaxed",
+      "small": "text-sm text-zinc-500",
+      "overline": "text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500"
+    }
+  },
+  "colors": {
+    "primary": "bg-zinc-950 text-white",
+    "secondary": "bg-white text-zinc-900 border border-zinc-200",
+    "accent": "bg-blue-600 text-white",
+    "background": "bg-zinc-50",
+    "surface": "bg-white",
+    "border": "border-zinc-200",
+    "muted": "text-zinc-500",
+    "success": "text-emerald-700 bg-emerald-50 border-emerald-200",
+    "warning": "text-amber-700 bg-amber-50 border-amber-200",
+    "danger": "text-red-700 bg-red-50 border-red-200",
+    "hover_states": {
+      "primary": "hover:bg-zinc-800 hover:text-white",
+      "secondary": "hover:bg-zinc-50",
+      "accent": "hover:bg-blue-700 hover:text-white",
+      "surface": "hover:bg-zinc-50"
+    }
+  },
+  "layout_and_spacing": {
+    "spacing_scale": "p-4, p-6, p-8, p-12, p-16, p-24, p-32",
+    "container_padding": "px-6 sm:px-12 lg:px-24",
+    "border_radius": "rounded-lg",
+    "grid_patterns": {
+      "marketing_hero": "grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center",
+      "bento_features": "grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6",
+      "dashboard_layout": "grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6",
+      "dashboard_kpi": "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+    }
+  },
+  "components": {
+    "buttons": "rounded-md font-medium px-4 py-2 transition-colors inline-flex items-center justify-center gap-2",
+    "cards": "bg-white border border-zinc-200 rounded-lg shadow-sm p-6",
+    "inputs": "bg-white border border-zinc-200 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full",
+    "tables": "w-full text-left border-collapse text-sm",
+    "table_headers": "border-b border-zinc-200 py-3 px-4 font-medium text-zinc-500 bg-zinc-50/50",
+    "table_cells": "border-b border-zinc-100 py-3 px-4 text-zinc-900",
+    "badges": "rounded-full px-2.5 py-0.5 text-xs font-medium border"
+  },
+  "motion_and_interactions": {
+    "hover": "transition-all duration-200 ease-in-out",
+    "active": "active:scale-[0.98]",
+    "focus": "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.unsplash.com/photo-1758876202980-0a28b744fb24?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxzdGFydHVwJTIwdGVhbSUyMHdvcmtpbmclMjBkYXNoYm9hcmR8ZW58MHx8fHwxNzc3NzgzNDIzfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Two colleagues discussing data on a laptop screen.",
+        "category": "marketing_features"
+      },
+      {
+         "url": "https://images.pexels.com/photos/10142683/pexels-photo-10142683.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+         "description": "Minimalist Microsoft logo",
+         "category": "sponsor_logo"
+      }
+    ],
+    "icons": "lucide-react"
+  },
+  "accessibility": {
+    "contrast": "Ensure text contrast meets APCA/WCAG standards. Use zinc-500 minimum for subtle text against white.",
+    "focus": "Always provide visible focus rings for keyboard navigation.",
+    "aria": "Use aria-labels for icon-only buttons and purely decorative elements."
+  },
+  "instructions_to_main_agent": [
+    "Load Google Fonts: Outfit for headings and Manrope for body text.",
+    "Install and use lucide-react for all iconography.",
+    "Follow the Linear-inspired clean SaaS style: use crisp borders (border-zinc-200), pure white surfaces (bg-white), and off-white backgrounds (bg-zinc-50). Absolutely NO purple or violet gradients.",
+    "For the marketing page: Apply generous spacing (p-12 to p-32). Use Outfit for bold headings and Manrope for highly legible body text.",
+    "For the dashboard: Maintain a strict, dense grid layout. Cards should have no more than rounded-lg (8px) radius and a subtle shadow-sm. Use high contrast for metrics and tight spacing.",
+    "For dashboard charts: Utilize Shadcn Charts or Recharts. The combo chart should use sharp, distinct colors (e.g., blue-600 for visits bar, zinc-800 for conversions line) for crisp aesthetics.",
+    "Use standard HTML + Tailwind for marketing layouts to ensure full creative freedom, and highly customized Shadcn components for complex interactive logic like forms, tables, and dialogs.",
+    "Ensure all interactive elements (buttons, links, inputs) have a 'data-testid' attribute for robust automated testing."
+  ]
+}
