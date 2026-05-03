@@ -5,7 +5,7 @@ import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Sparkles, TrendingUp, TrendingDown, ShieldAlert } from "lucide-react";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Area, AreaChart, Legend, PieChart, Pie, Cell } from "recharts";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Line, ComposedChart, Legend, PieChart, Pie, Cell } from "recharts";
 import { toast } from "sonner";
 
 const fmt = (n) => (n ?? 0).toLocaleString();
@@ -107,44 +107,31 @@ export default function Dashboard() {
             <div className="font-heading text-lg font-medium mt-0.5">Visits & conversions</div>
           </div>
           <div className="flex gap-4 text-xs text-zinc-600">
-            <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-blue-600 rounded-full" /> Total clicks</span>
-            <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-emerald-500 rounded-full" /> Conversions</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-blue-600" /> Total clicks</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-green-600" /> Conversions</span>
           </div>
         </div>
-        <div className="h-[260px] sm:h-[320px]">
+        <div className="h-[260px] sm:h-[340px]">
           {hasData ? (
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data.series} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="visitsFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="convFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.25} />
-                    <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
+              <ComposedChart data={data.series} margin={{ top: 16, right: 12, left: 0, bottom: 0 }} barGap={2}>
                 <CartesianGrid vertical={false} stroke="#e4e4e7" strokeDasharray="2 4" />
                 <XAxis
                   dataKey="date"
                   tickFormatter={(v) => {
                     if (!v) return "";
-                    const [y, m, d] = v.split("-");
+                    const [, m, d] = v.split("-");
                     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                    const monthShort = monthNames[parseInt(m, 10) - 1] || m;
-                    if (days >= 180) return `${monthShort} ${parseInt(d, 10)}`;
-                    if (days >= 90) return `${monthShort} ${parseInt(d, 10)}`;
-                    return `${monthShort} ${parseInt(d, 10)}`;
+                    return `${monthNames[parseInt(m, 10) - 1]} ${parseInt(d, 10)}`;
                   }}
                   interval={days >= 180 ? Math.floor(days / 10) : days >= 90 ? Math.floor(days / 8) : "preserveStartEnd"}
                   stroke="#71717a" fontSize={11} tickLine={false} axisLine={false}
                   minTickGap={28} dy={8}
                 />
-                <YAxis yAxisId="l" stroke="#71717a" fontSize={11} tickLine={false} axisLine={false} width={36} />
+                <YAxis yAxisId="l" stroke="#71717a" fontSize={11} tickLine={false} axisLine={false} width={40} />
                 <YAxis yAxisId="r" orientation="right" stroke="#71717a" fontSize={11} tickLine={false} axisLine={false} width={28} />
                 <Tooltip
-                  cursor={{ stroke: "#d4d4d8", strokeWidth: 1, strokeDasharray: "3 3" }}
+                  cursor={{ fill: "rgba(37,99,235,0.06)" }}
                   contentStyle={{ borderRadius: 10, border: "1px solid #e4e4e7", fontSize: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.08)", padding: "10px 14px" }}
                   labelStyle={{ color: "#71717a", marginBottom: 6, fontWeight: 500 }}
                   labelFormatter={(v) => {
@@ -154,21 +141,14 @@ export default function Dashboard() {
                     return `${monthNames[parseInt(m, 10) - 1]} ${parseInt(d, 10)}, ${y}`;
                   }}
                 />
-                <Area
-                  yAxisId="l" type="linear" dataKey="visits" name="Total clicks"
-                  stroke="#2563eb" strokeWidth={2}
-                  fill="url(#visitsFill)"
-                  dot={{ r: 3, fill: "#fff", stroke: "#2563eb", strokeWidth: 2 }}
-                  activeDot={{ r: 5, fill: "#2563eb", stroke: "#fff", strokeWidth: 2 }}
-                />
-                <Area
+                <Bar yAxisId="l" dataKey="visits" name="Total clicks" fill="#2563eb" radius={[3, 3, 0, 0]} maxBarSize={28} />
+                <Line
                   yAxisId="r" type="linear" dataKey="conversions" name="Conversions"
-                  stroke="#10b981" strokeWidth={2}
-                  fill="url(#convFill)"
-                  dot={{ r: 3, fill: "#fff", stroke: "#10b981", strokeWidth: 2 }}
-                  activeDot={{ r: 5, fill: "#10b981", stroke: "#fff", strokeWidth: 2 }}
+                  stroke="#16a34a" strokeWidth={2.25}
+                  dot={{ r: 3.5, fill: "#16a34a", stroke: "#fff", strokeWidth: 1.5 }}
+                  activeDot={{ r: 5.5, fill: "#16a34a", stroke: "#fff", strokeWidth: 2 }}
                 />
-              </AreaChart>
+              </ComposedChart>
             </ResponsiveContainer>
           ) : (
             <EmptyState onSeed={seed} seeding={seeding} />
