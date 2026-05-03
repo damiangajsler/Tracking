@@ -75,45 +75,13 @@ export default function Landing() {
               <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
               <div className="ml-3 text-xs text-zinc-500 font-mono">app.linkly.io/dashboard</div>
             </div>
-            <div className="p-6 grid grid-cols-2 md:grid-cols-5 gap-3">
-              {[
-                { l: "People", v: "15,257" }, { l: "Visits", v: "33,025" }, { l: "Conversions", v: "719" }, { l: "Conv. Rate", v: "4.1%" }, { l: "Revenue", v: "$41,452" },
-              ].map((k) => (
-                <div key={k.l} className="rounded-lg border border-zinc-200 p-4 bg-white">
-                  <div className="text-xs uppercase tracking-[0.15em] text-zinc-500">{k.l}</div>
-                  <div className="font-heading font-semibold text-2xl mt-1 text-zinc-950">{k.v}</div>
-                </div>
-              ))}
-            </div>
-            <div className="px-6 pb-6">
-              <div className="h-56 rounded-lg border border-zinc-200 bg-white p-4">
-                <svg viewBox="0 0 600 180" className="w-full h-full" preserveAspectRatio="none">
-                  {/* horizontal grid */}
-                  {[0.2, 0.4, 0.6, 0.8].map((p) => (
-                    <line key={p} x1="0" x2="600" y1={180 * p} y2={180 * p} stroke="#e4e4e7" strokeWidth="1" strokeDasharray="3 3" />
-                  ))}
-                  {/* visits area */}
-                  <path
-                    d="M0,120 L20,90 L40,110 L60,70 L80,85 L100,55 L120,75 L140,40 L160,65 L180,30 L200,55 L220,45 L240,70 L260,35 L280,60 L300,25 L320,50 L340,40 L360,65 L380,30 L400,55 L420,20 L440,45 L460,35 L480,60 L500,40 L520,55 L540,25 L560,50 L580,35 L600,55 L600,180 L0,180 Z"
-                    fill="#2563eb" fillOpacity="0.08"
-                  />
-                  {/* visits line */}
-                  <path
-                    d="M0,120 L20,90 L40,110 L60,70 L80,85 L100,55 L120,75 L140,40 L160,65 L180,30 L200,55 L220,45 L240,70 L260,35 L280,60 L300,25 L320,50 L340,40 L360,65 L380,30 L400,55 L420,20 L440,45 L460,35 L480,60 L500,40 L520,55 L540,25 L560,50 L580,35 L600,55"
-                    fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                  />
-                  {/* conversions line */}
-                  <path
-                    d="M0,150 L20,140 L40,145 L60,130 L80,135 L100,120 L120,128 L140,110 L160,118 L180,100 L200,108 L220,115 L240,125 L260,108 L280,115 L300,95 L320,105 L340,110 L360,120 L380,100 L400,108 L420,90 L440,100 L460,105 L480,115 L500,108 L520,118 L540,98 L560,110 L580,103 L600,112"
-                    fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <div className="mt-3 flex gap-4 text-xs text-zinc-600">
-                <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-blue-600 rounded-full" /> Visits</span>
-                <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-emerald-500 rounded-full" /> Conversions</span>
-              </div>
-            </div>
+            <img
+              src="https://customer-assets.emergentagent.com/job_flow-track-26/artifacts/u5sb9wus_Screenshot_20260503_143006_Chrome.jpg"
+              alt="Linkly dashboard — traffic report with visits bar chart and conversions line"
+              className="w-full h-auto block"
+              loading="eager"
+              data-testid="landing-dashboard-preview"
+            />
           </div>
         </div>
       </section>
