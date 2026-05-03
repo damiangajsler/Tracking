@@ -37,9 +37,9 @@ export default function Goals() {
 
   return (
     <AppLayout>
-      <div className="flex items-center justify-between mb-6" data-testid="goals-page">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6" data-testid="goals-page">
         <div>
-          <h1 className="font-heading font-semibold text-2xl tracking-tight">Conversion goals</h1>
+          <h1 className="font-heading font-semibold text-xl sm:text-2xl tracking-tight">Conversion goals</h1>
           <p className="text-sm text-zinc-500">Define what counts as success, then fire our pixel to track it.</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
@@ -68,7 +68,8 @@ export default function Goals() {
         </Card>
       ) : (
         <Card className="border-zinc-200 bg-white overflow-hidden">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[480px]">
             <thead>
               <tr className="border-b border-zinc-200 text-zinc-500 text-xs uppercase tracking-wider bg-zinc-50/50">
                 <th className="text-left px-4 py-3 font-medium">Goal</th>
@@ -93,6 +94,7 @@ export default function Goals() {
               ))}
             </tbody>
           </table>
+          </div>
         </Card>
       )}
 

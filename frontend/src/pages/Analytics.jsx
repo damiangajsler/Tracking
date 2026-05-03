@@ -22,7 +22,7 @@ export default function Analytics() {
   return (
     <AppLayout>
       <div className="mb-6" data-testid="analytics-page">
-        <h1 className="font-heading font-semibold text-2xl tracking-tight">Click analytics</h1>
+        <h1 className="font-heading font-semibold text-xl sm:text-2xl tracking-tight">Click analytics</h1>
         <p className="text-sm text-zinc-500">Every click, with fraud scoring and attribution data.</p>
       </div>
 
@@ -35,7 +35,7 @@ export default function Analytics() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm min-w-[800px]">
               <thead>
                 <tr className="border-b border-zinc-200 text-zinc-500 text-xs uppercase tracking-wider bg-zinc-50/50">
                   <th className="text-left px-4 py-3 font-medium">When</th>

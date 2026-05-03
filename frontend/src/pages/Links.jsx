@@ -54,9 +54,9 @@ export default function Links() {
 
   return (
     <AppLayout>
-      <div className="flex items-center justify-between mb-6" data-testid="links-page">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6" data-testid="links-page">
         <div>
-          <h1 className="font-heading font-semibold text-2xl tracking-tight">Links</h1>
+          <h1 className="font-heading font-semibold text-xl sm:text-2xl tracking-tight">Links</h1>
           <p className="text-sm text-zinc-500">Shorten, track and attribute every link.</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
@@ -110,7 +110,8 @@ export default function Links() {
             <div className="text-sm text-zinc-500 mt-1">Create your first trackable link to start measuring.</div>
           </div>
         ) : (
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[560px]">
             <thead>
               <tr className="border-b border-zinc-200 text-zinc-500 text-xs uppercase tracking-wider bg-zinc-50/50">
                 <th className="text-left px-4 py-3 font-medium">Short link</th>
@@ -146,6 +147,7 @@ export default function Links() {
               })}
             </tbody>
           </table>
+          </div>
         )}
       </Card>
     </AppLayout>

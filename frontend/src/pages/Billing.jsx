@@ -62,7 +62,7 @@ export default function Billing() {
   return (
     <AppLayout>
       <div className="mb-6" data-testid="billing-page">
-        <h1 className="font-heading font-semibold text-2xl tracking-tight">Billing</h1>
+        <h1 className="font-heading font-semibold text-xl sm:text-2xl tracking-tight">Billing</h1>
         <p className="text-sm text-zinc-500">Choose the plan that fits your traffic.</p>
       </div>
 

@@ -38,9 +38,9 @@ export default function Campaigns() {
 
   return (
     <AppLayout>
-      <div className="flex items-center justify-between mb-6" data-testid="campaigns-page">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6" data-testid="campaigns-page">
         <div>
-          <h1 className="font-heading font-semibold text-2xl tracking-tight">Campaigns</h1>
+          <h1 className="font-heading font-semibold text-xl sm:text-2xl tracking-tight">Campaigns</h1>
           <p className="text-sm text-zinc-500">Group links by project or campaign.</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>

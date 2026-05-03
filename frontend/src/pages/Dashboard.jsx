@@ -12,9 +12,9 @@ const fmt = (n) => (n ?? 0).toLocaleString();
 const fmtMoney = (n) => "$" + (n ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const KpiTile = ({ label, value, sub, trend }) => (
-  <Card className="p-5 border-zinc-200 shadow-sm rounded-lg bg-white" data-testid={`kpi-${label.replace(/\s+/g, "-").toLowerCase()}`}>
-    <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">{label}</div>
-    <div className="font-heading text-3xl font-semibold tracking-tight text-zinc-950 mt-1.5">{value}</div>
+  <Card className="p-4 sm:p-5 border-zinc-200 shadow-sm rounded-lg bg-white min-w-0" data-testid={`kpi-${label.replace(/\s+/g, "-").toLowerCase()}`}>
+    <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] text-zinc-500 truncate">{label}</div>
+    <div className="font-heading text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight text-zinc-950 mt-1.5 truncate">{value}</div>
     {sub && (
       <div className={`text-xs mt-1.5 flex items-center gap-1 ${trend === "down" ? "text-red-600" : "text-emerald-600"}`}>
         {trend === "down" ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />} {sub}
@@ -57,12 +57,12 @@ export default function Dashboard() {
 
   return (
     <AppLayout>
-      <div className="flex items-center justify-between mb-6" data-testid="dashboard-page">
-        <div>
-          <h1 className="font-heading font-semibold text-2xl tracking-tight">Dashboard</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6" data-testid="dashboard-page">
+        <div className="min-w-0">
+          <h1 className="font-heading font-semibold text-xl sm:text-2xl tracking-tight">Dashboard</h1>
           <p className="text-sm text-zinc-500">An overview of your traffic and conversions.</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <Select value={String(days)} onValueChange={(v) => setDays(Number(v))}>
             <SelectTrigger className="w-[140px] bg-white" data-testid="date-range-select"><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -72,13 +72,13 @@ export default function Dashboard() {
             </SelectContent>
           </Select>
           <Button onClick={seed} disabled={seeding} variant="outline" className="border-zinc-300" data-testid="seed-demo-button">
-            <Sparkles className="h-4 w-4 mr-1.5" /> {seeding ? "Seeding…" : "Add demo data"}
+            <Sparkles className="h-4 w-4 mr-1.5" /> <span className="hidden sm:inline">{seeding ? "Seeding…" : "Add demo data"}</span><span className="sm:hidden">{seeding ? "…" : "Demo"}</span>
           </Button>
         </div>
       </div>
 
       {/* KPIs row 1 */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-3 sm:mb-4">
         <KpiTile label="People" value={fmt(k?.people)} />
         <KpiTile label="Visits" value={fmt(k?.visits)} />
         <KpiTile label="Conversions" value={fmt(k?.conversions)} />
@@ -86,21 +86,21 @@ export default function Dashboard() {
         <KpiTile label="Revenue" value={fmtMoney(k?.revenue)} />
       </div>
       {/* KPIs row 2 */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-6">
         <KpiTile label="Cost" value={fmtMoney(k?.cost)} />
         <KpiTile label="CPA" value={fmtMoney(k?.cpa)} />
         <KpiTile label="CPC" value={fmtMoney(k?.cpc)} />
         <KpiTile label="Avg Goal Value" value={fmtMoney(k?.avg_goal_value)} />
-        <Card className="p-5 border-zinc-200 shadow-sm bg-white" data-testid="kpi-fraud">
-          <div className="text-xs uppercase tracking-[0.18em] text-zinc-500 flex items-center gap-1.5"><ShieldAlert className="h-3.5 w-3.5" /> Fraud</div>
-          <div className="font-heading text-3xl font-semibold tracking-tight text-zinc-950 mt-1.5">{fmt(k?.suspicious_clicks)}</div>
+        <Card className="p-4 sm:p-5 border-zinc-200 shadow-sm bg-white min-w-0" data-testid="kpi-fraud">
+          <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] text-zinc-500 flex items-center gap-1.5"><ShieldAlert className="h-3.5 w-3.5" /> Fraud</div>
+          <div className="font-heading text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight text-zinc-950 mt-1.5">{fmt(k?.suspicious_clicks)}</div>
           <div className="text-xs text-zinc-500 mt-1.5">{fmt(k?.clean_clicks)} clean clicks</div>
         </Card>
       </div>
 
       {/* Main chart */}
-      <Card className="p-6 border-zinc-200 shadow-sm bg-white mb-6" data-testid="traffic-chart">
-        <div className="flex items-center justify-between mb-4">
+      <Card className="p-4 sm:p-6 border-zinc-200 shadow-sm bg-white mb-6" data-testid="traffic-chart">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
           <div>
             <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">Traffic report</div>
             <div className="font-heading text-lg font-medium mt-0.5">Visits & conversions</div>
@@ -110,7 +110,7 @@ export default function Dashboard() {
             <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-zinc-900" /> Conversions</span>
           </div>
         </div>
-        <div className="h-[320px]">
+        <div className="h-[260px] sm:h-[320px]">
           {hasData ? (
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={data.series} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
