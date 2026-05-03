@@ -5,7 +5,7 @@ import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Sparkles, TrendingUp, TrendingDown, ShieldAlert } from "lucide-react";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Line, ComposedChart, Legend, PieChart, Pie, Cell } from "recharts";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Line, LineChart, Legend, PieChart, Pie, Cell } from "recharts";
 import { toast } from "sonner";
 
 const fmt = (n) => (n ?? 0).toLocaleString();
@@ -23,7 +23,7 @@ const KpiTile = ({ label, value, sub, trend }) => (
   </Card>
 );
 
-const COLORS = ["#2563eb", "#18181b", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"];
+const COLORS = ["#2563eb", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4", "#ec4899"];
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
@@ -106,22 +106,25 @@ export default function Dashboard() {
             <div className="font-heading text-lg font-medium mt-0.5">Visits & conversions</div>
           </div>
           <div className="flex gap-4 text-xs text-zinc-600">
-            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-blue-600" /> Visits</span>
-            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-zinc-900" /> Conversions</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-blue-600 rounded-full" /> Visits</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-emerald-500 rounded-full" /> Conversions</span>
           </div>
         </div>
         <div className="h-[260px] sm:h-[320px]">
           {hasData ? (
             <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={data.series} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
-                <CartesianGrid vertical={false} stroke="#e4e4e7" />
+              <LineChart data={data.series} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                <CartesianGrid vertical={false} stroke="#e4e4e7" strokeDasharray="3 3" />
                 <XAxis dataKey="date" tickFormatter={(v) => v.slice(5)} stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis yAxisId="l" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis yAxisId="r" orientation="right" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} />
-                <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid #e4e4e7", fontSize: 12 }} />
-                <Bar yAxisId="l" dataKey="visits" fill="#2563eb" radius={[3, 3, 0, 0]} />
-                <Line yAxisId="r" type="monotone" dataKey="conversions" stroke="#18181b" strokeWidth={2} dot={{ r: 3, fill: "#18181b" }} />
-              </ComposedChart>
+                <Tooltip
+                  cursor={{ stroke: "#e4e4e7", strokeWidth: 1 }}
+                  contentStyle={{ borderRadius: 8, border: "1px solid #e4e4e7", fontSize: 12, boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
+                />
+                <Line yAxisId="l" type="monotone" dataKey="visits" stroke="#2563eb" strokeWidth={2.5} dot={false} activeDot={false} />
+                <Line yAxisId="r" type="monotone" dataKey="conversions" stroke="#10b981" strokeWidth={2.5} dot={false} activeDot={false} />
+              </LineChart>
             </ResponsiveContainer>
           ) : (
             <EmptyState onSeed={seed} seeding={seeding} />
@@ -139,7 +142,7 @@ export default function Dashboard() {
                 <BarChart data={data.by_country} layout="vertical" margin={{ left: 10 }}>
                   <XAxis type="number" hide />
                   <YAxis type="category" dataKey="name" stroke="#71717a" fontSize={11} tickLine={false} axisLine={false} width={100} />
-                  <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} />
+                  <Tooltip cursor={{ fill: "#f4f4f5" }} contentStyle={{ borderRadius: 8, fontSize: 12, border: "1px solid #e4e4e7" }} />
                   <Bar dataKey="value" fill="#2563eb" radius={[0, 3, 3, 0]} />
                 </BarChart>
               </ResponsiveContainer>
@@ -153,11 +156,11 @@ export default function Dashboard() {
             {(data?.by_device?.length || 0) > 0 ? (
               <ResponsiveContainer>
                 <PieChart>
-                  <Pie data={data.by_device} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={45} outerRadius={80} paddingAngle={2}>
-                    {data.by_device.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                  <Pie data={data.by_device} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={45} outerRadius={80} paddingAngle={2} stroke="none" activeShape={null}>
+                    {data.by_device.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} stroke="none" />)}
                   </Pie>
                   <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
-                  <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} />
+                  <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12, border: "1px solid #e4e4e7" }} />
                 </PieChart>
               </ResponsiveContainer>
             ) : <EmptyMini />}
