@@ -50,10 +50,17 @@ export default function Login() {
           <div className="mt-10 rounded-lg border border-zinc-800 bg-zinc-900 p-5">
             <div className="text-xs text-zinc-500 uppercase tracking-wider">Today's conversions</div>
             <div className="font-heading text-5xl font-semibold mt-2">47</div>
-            <div className="mt-4 flex items-end gap-1 h-16">
-              {[30, 45, 20, 60, 40, 70, 55, 80, 35, 65, 75, 50].map((h, i) => (
-                <div key={i} className="flex-1 rounded-sm bg-blue-500" style={{ height: `${h}%` }} />
-              ))}
+            <div className="mt-4 h-16">
+              <svg viewBox="0 0 180 60" className="w-full h-full" preserveAspectRatio="none">
+                <path
+                  d="M0,40 L15,32 L30,38 L45,22 L60,28 L75,15 L90,25 L105,10 L120,20 L135,18 L150,12 L165,22 L180,8"
+                  fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                />
+                <path
+                  d="M0,50 L15,46 L30,48 L45,40 L60,42 L75,35 L90,40 L105,28 L120,33 L135,30 L150,25 L165,32 L180,22"
+                  fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                />
+              </svg>
             </div>
           </div>
         </div>

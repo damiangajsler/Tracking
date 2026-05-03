@@ -86,11 +86,32 @@ export default function Landing() {
               ))}
             </div>
             <div className="px-6 pb-6">
-              <div className="h-56 rounded-lg border border-zinc-200 bg-gradient-to-b from-white to-zinc-50 p-4 flex items-end gap-2">
-                {Array.from({ length: 30 }).map((_, i) => {
-                  const h = 20 + ((i * 37) % 80);
-                  return <div key={i} className="flex-1 rounded-sm bg-blue-600/90" style={{ height: `${h}%` }} />;
-                })}
+              <div className="h-56 rounded-lg border border-zinc-200 bg-white p-4">
+                <svg viewBox="0 0 600 180" className="w-full h-full" preserveAspectRatio="none">
+                  {/* horizontal grid */}
+                  {[0.2, 0.4, 0.6, 0.8].map((p) => (
+                    <line key={p} x1="0" x2="600" y1={180 * p} y2={180 * p} stroke="#e4e4e7" strokeWidth="1" strokeDasharray="3 3" />
+                  ))}
+                  {/* visits area */}
+                  <path
+                    d="M0,120 L20,90 L40,110 L60,70 L80,85 L100,55 L120,75 L140,40 L160,65 L180,30 L200,55 L220,45 L240,70 L260,35 L280,60 L300,25 L320,50 L340,40 L360,65 L380,30 L400,55 L420,20 L440,45 L460,35 L480,60 L500,40 L520,55 L540,25 L560,50 L580,35 L600,55 L600,180 L0,180 Z"
+                    fill="#2563eb" fillOpacity="0.08"
+                  />
+                  {/* visits line */}
+                  <path
+                    d="M0,120 L20,90 L40,110 L60,70 L80,85 L100,55 L120,75 L140,40 L160,65 L180,30 L200,55 L220,45 L240,70 L260,35 L280,60 L300,25 L320,50 L340,40 L360,65 L380,30 L400,55 L420,20 L440,45 L460,35 L480,60 L500,40 L520,55 L540,25 L560,50 L580,35 L600,55"
+                    fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                  />
+                  {/* conversions line */}
+                  <path
+                    d="M0,150 L20,140 L40,145 L60,130 L80,135 L100,120 L120,128 L140,110 L160,118 L180,100 L200,108 L220,115 L240,125 L260,108 L280,115 L300,95 L320,105 L340,110 L360,120 L380,100 L400,108 L420,90 L440,100 L460,105 L480,115 L500,108 L520,118 L540,98 L560,110 L580,103 L600,112"
+                    fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div className="mt-3 flex gap-4 text-xs text-zinc-600">
+                <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-blue-600 rounded-full" /> Visits</span>
+                <span className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-emerald-500 rounded-full" /> Conversions</span>
               </div>
             </div>
           </div>
