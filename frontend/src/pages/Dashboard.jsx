@@ -64,11 +64,12 @@ export default function Dashboard() {
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <Select value={String(days)} onValueChange={(v) => setDays(Number(v))}>
-            <SelectTrigger className="w-[140px] bg-white" data-testid="date-range-select"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="w-[150px] bg-white" data-testid="date-range-select"><SelectValue /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="7" data-testid="range-7">Last 7 days</SelectItem>
-              <SelectItem value="30" data-testid="range-30">Last 30 days</SelectItem>
-              <SelectItem value="90" data-testid="range-90">Last 90 days</SelectItem>
+              <SelectItem value="30" data-testid="range-monthly">Monthly</SelectItem>
+              <SelectItem value="90" data-testid="range-3months">3 months</SelectItem>
+              <SelectItem value="180" data-testid="range-6months">6 months</SelectItem>
+              <SelectItem value="365" data-testid="range-yearly">Yearly</SelectItem>
             </SelectContent>
           </Select>
           <Button onClick={seed} disabled={seeding} variant="outline" className="border-zinc-300" data-testid="seed-demo-button">
@@ -115,7 +116,17 @@ export default function Dashboard() {
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data.series} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                 <CartesianGrid vertical={false} stroke="#e4e4e7" strokeDasharray="3 3" />
-                <XAxis dataKey="date" tickFormatter={(v) => v.slice(5)} stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} />
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={(v) => {
+                    if (!v) return "";
+                    if (days >= 180) return v.slice(5, 7) + "/" + v.slice(8, 10);
+                    return v.slice(5);
+                  }}
+                  interval={days >= 180 ? Math.floor(days / 12) : "preserveStartEnd"}
+                  stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false}
+                  minTickGap={20}
+                />
                 <YAxis yAxisId="l" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis yAxisId="r" orientation="right" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip
