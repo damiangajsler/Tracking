@@ -516,7 +516,18 @@ async def payment_status(session_id: str, request: Request, user: User = Depends
     host_url = str(request.base_url).rstrip("/")
     webhook_url = f"{host_url}/api/webhook/stripe"
     sc = StripeCheckout(api_key=STRIPE_API_KEY, webhook_url=webhook_url)
-    status: CheckoutStatusResponse = await sc.get_checkout_status(session_id)
+    try:
+        status: CheckoutStatusResponse = await sc.get_checkout_status(session_id)
+    except Exception as e:
+        # Stripe may not yet recognize the freshly-created session, or key mismatch — fall back to DB state.
+        logger.warning(f"Stripe status retrieval failed for {session_id}: {e}")
+        return {
+            "status": tx.get("status", "open"),
+            "payment_status": tx.get("payment_status", "initiated"),
+            "amount_total": int(float(tx.get("amount", 0)) * 100),
+            "currency": tx.get("currency", "usd"),
+            "plan_id": tx.get("plan_id"),
+        }
     if status.payment_status == "paid" and tx.get("payment_status") != "paid":
         await db.payment_transactions.update_one(
             {"session_id": session_id},
