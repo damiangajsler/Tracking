@@ -125,37 +125,47 @@ export default function Dashboard() {
                     <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid vertical={false} stroke="#f4f4f5" />
+                <CartesianGrid vertical={false} stroke="#e4e4e7" strokeDasharray="2 4" />
                 <XAxis
                   dataKey="date"
                   tickFormatter={(v) => {
                     if (!v) return "";
-                    if (days >= 180) return v.slice(5, 7) + "/" + v.slice(8, 10);
-                    return v.slice(5);
+                    const [y, m, d] = v.split("-");
+                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    const monthShort = monthNames[parseInt(m, 10) - 1] || m;
+                    if (days >= 180) return `${monthShort} ${parseInt(d, 10)}`;
+                    if (days >= 90) return `${monthShort} ${parseInt(d, 10)}`;
+                    return `${monthShort} ${parseInt(d, 10)}`;
                   }}
-                  interval={days >= 180 ? Math.floor(days / 12) : "preserveStartEnd"}
-                  stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false}
-                  minTickGap={20}
+                  interval={days >= 180 ? Math.floor(days / 10) : days >= 90 ? Math.floor(days / 8) : "preserveStartEnd"}
+                  stroke="#71717a" fontSize={11} tickLine={false} axisLine={false}
+                  minTickGap={28} dy={8}
                 />
-                <YAxis yAxisId="l" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} width={36} />
-                <YAxis yAxisId="r" orientation="right" stroke="#a1a1aa" fontSize={11} tickLine={false} axisLine={false} width={28} />
+                <YAxis yAxisId="l" stroke="#71717a" fontSize={11} tickLine={false} axisLine={false} width={36} />
+                <YAxis yAxisId="r" orientation="right" stroke="#71717a" fontSize={11} tickLine={false} axisLine={false} width={28} />
                 <Tooltip
-                  cursor={{ stroke: "#e4e4e7", strokeWidth: 1, strokeDasharray: "3 3" }}
-                  contentStyle={{ borderRadius: 10, border: "1px solid #e4e4e7", fontSize: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.06)", padding: "8px 12px" }}
-                  labelStyle={{ color: "#71717a", marginBottom: 4 }}
+                  cursor={{ stroke: "#d4d4d8", strokeWidth: 1, strokeDasharray: "3 3" }}
+                  contentStyle={{ borderRadius: 10, border: "1px solid #e4e4e7", fontSize: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.08)", padding: "10px 14px" }}
+                  labelStyle={{ color: "#71717a", marginBottom: 6, fontWeight: 500 }}
+                  labelFormatter={(v) => {
+                    if (!v) return "";
+                    const [y, m, d] = v.split("-");
+                    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    return `${monthNames[parseInt(m, 10) - 1]} ${parseInt(d, 10)}, ${y}`;
+                  }}
                 />
                 <Area
-                  yAxisId="l" type="monotone" dataKey="visits"
-                  stroke="#2563eb" strokeWidth={2.5}
+                  yAxisId="l" type="linear" dataKey="visits" name="Total clicks"
+                  stroke="#2563eb" strokeWidth={2}
                   fill="url(#visitsFill)"
-                  dot={false}
+                  dot={{ r: 3, fill: "#fff", stroke: "#2563eb", strokeWidth: 2 }}
                   activeDot={{ r: 5, fill: "#2563eb", stroke: "#fff", strokeWidth: 2 }}
                 />
                 <Area
-                  yAxisId="r" type="monotone" dataKey="conversions"
-                  stroke="#10b981" strokeWidth={2.5}
+                  yAxisId="r" type="linear" dataKey="conversions" name="Conversions"
+                  stroke="#10b981" strokeWidth={2}
                   fill="url(#convFill)"
-                  dot={false}
+                  dot={{ r: 3, fill: "#fff", stroke: "#10b981", strokeWidth: 2 }}
                   activeDot={{ r: 5, fill: "#10b981", stroke: "#fff", strokeWidth: 2 }}
                 />
               </AreaChart>
