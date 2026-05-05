@@ -42,7 +42,7 @@ export default function Landing() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 hero-grid pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24 lg:py-32 relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-24 pb-32 lg:pt-32 lg:pb-44 relative">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600 mb-6 animate-fade-up">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> New · Fraud score on every click
@@ -68,20 +68,33 @@ export default function Landing() {
           </div>
 
           {/* Dashboard preview */}
-          <div className="mt-16 relative rounded-xl border border-zinc-200 bg-white shadow-xl shadow-zinc-900/5 overflow-hidden animate-fade-up" style={{ animationDelay: "240ms" }}>
-            <div className="flex items-center gap-1.5 border-b border-zinc-200 bg-zinc-50 px-4 py-2.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
-              <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
-              <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
-              <div className="ml-3 text-xs text-zinc-500 font-mono">app.linkly.io/dashboard</div>
+          <div className="mt-16 relative animate-fade-up" style={{ animationDelay: "240ms" }}>
+            <div className="relative rounded-xl border border-zinc-200 bg-white shadow-xl shadow-zinc-900/5 overflow-hidden">
+              <div className="flex items-center gap-1.5 border-b border-zinc-200 bg-zinc-50 px-4 py-2.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
+                <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
+                <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
+                <div className="ml-3 text-xs text-zinc-500 font-mono">app.linkly.io/dashboard</div>
+              </div>
+              <img
+                src="https://customer-assets.emergentagent.com/job_flow-track-26/artifacts/zjl92u4q_1cb80d2dda5fef21dcc5aecf1345530f4a9300359ebf231b5675a7e00da157db.jpeg"
+                alt="Linkly dashboard traffic report showing visits and conversions chart"
+                className="w-full h-auto block"
+                loading="eager"
+                data-testid="landing-dashboard-preview"
+              />
             </div>
-            <img
-              src="https://customer-assets.emergentagent.com/job_flow-track-26/artifacts/u5sb9wus_Screenshot_20260503_143006_Chrome.jpg"
-              alt="Linkly dashboard — traffic report with visits bar chart and conversions line"
-              className="w-full h-auto block"
-              loading="eager"
-              data-testid="landing-dashboard-preview"
-            />
+
+            {/* Floating phone mockup */}
+            <div className="hidden md:block absolute -right-4 lg:right-8 -bottom-10 lg:-bottom-16 w-[190px] lg:w-[230px] rounded-[28px] border-[6px] border-zinc-900 bg-zinc-900 shadow-2xl shadow-zinc-900/30 overflow-hidden">
+              <img
+                src="https://customer-assets.emergentagent.com/job_flow-track-26/artifacts/t62rx0v3_Screenshot_20260503_145554_Chrome.jpg"
+                alt="Linkly mobile dashboard with Total Clicks, Unique Clicks, Conversions KPIs"
+                className="w-full h-auto block rounded-[22px]"
+                loading="lazy"
+                data-testid="landing-mobile-preview"
+              />
+            </div>
           </div>
         </div>
       </section>
