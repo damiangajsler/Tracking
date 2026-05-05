@@ -428,14 +428,21 @@ async def analytics_overview(days: int = 30, user: User = Depends(get_current_us
     cpc = 0.0
     avg_goal = (total_revenue / total_convs) if total_convs else 0.0
     # time series
-    series: Dict[str, Dict[str, int]] = {}
+    series: Dict[str, Dict[str, Any]] = {}
+    daily_ips: Dict[str, set] = {}
     for i in range(days):
         d = (now_utc() - timedelta(days=days - 1 - i)).strftime("%Y-%m-%d")
-        series[d] = {"date": d, "visits": 0, "conversions": 0}
+        series[d] = {"date": d, "visits": 0, "unique": 0, "conversions": 0}
+        daily_ips[d] = set()
     for c in clicks:
         d = (c.get("created_at") or "")[:10]
         if d in series:
             series[d]["visits"] += 1
+            ip = c.get("ip")
+            if ip:
+                daily_ips[d].add(ip)
+    for d, ips in daily_ips.items():
+        series[d]["unique"] = len(ips)
     for c in convs:
         d = (c.get("created_at") or "")[:10]
         if d in series:

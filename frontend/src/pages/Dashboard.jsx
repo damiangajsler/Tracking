@@ -25,9 +25,16 @@ const KpiTile = ({ label, value, sub, trend }) => (
 
 const COLORS = ["#2563eb", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4", "#ec4899"];
 
+const METRIC_META = {
+  visits: { label: "Total clicks", title: "Total clicks & conversions", color: "#2563eb" },
+  unique: { label: "Unique clicks", title: "Unique clicks & conversions", color: "#7c3aed" },
+  conversions: { label: "Conversions", title: "Conversions", color: "#16a34a" },
+};
+
 export default function Dashboard() {
   const [data, setData] = useState(null);
   const [days, setDays] = useState(30);
+  const [metric, setMetric] = useState("visits"); // visits | unique | conversions
   const [seeding, setSeeding] = useState(false);
 
   const load = async (d = days) => {
@@ -63,13 +70,19 @@ export default function Dashboard() {
           <p className="text-sm text-zinc-500">An overview of your traffic and conversions.</p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
-          <Select value={String(days)} onValueChange={(v) => setDays(Number(v))}>
-            <SelectTrigger className="w-[150px] bg-white" data-testid="date-range-select"><SelectValue /></SelectTrigger>
+          <Select value={metric} onValueChange={setMetric}>
+            <SelectTrigger className="w-[160px] bg-white" data-testid="metric-select"><SelectValue /></SelectTrigger>
             <SelectContent>
+              <SelectItem value="visits" data-testid="metric-total">Total Clicks</SelectItem>
+              <SelectItem value="unique" data-testid="metric-unique">Unique Clicks</SelectItem>
+              <SelectItem value="conversions" data-testid="metric-conversions">Conversions</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select value={String(days)} onValueChange={(v) => setDays(Number(v))}>
+            <SelectTrigger className="w-[130px] bg-white" data-testid="date-range-select"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="7" data-testid="range-weekly">Weekly</SelectItem>
               <SelectItem value="30" data-testid="range-monthly">Monthly</SelectItem>
-              <SelectItem value="90" data-testid="range-3months">3 months</SelectItem>
-              <SelectItem value="180" data-testid="range-6months">6 months</SelectItem>
-              <SelectItem value="365" data-testid="range-yearly">Yearly</SelectItem>
             </SelectContent>
           </Select>
           <Button onClick={seed} disabled={seeding} variant="outline" className="border-zinc-300" data-testid="seed-demo-button">
@@ -104,11 +117,13 @@ export default function Dashboard() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
           <div>
             <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">Traffic report</div>
-            <div className="font-heading text-lg font-medium mt-0.5">Visits & conversions</div>
+            <div className="font-heading text-lg font-medium mt-0.5">{METRIC_META[metric].title}</div>
           </div>
           <div className="flex gap-4 text-xs text-zinc-600">
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-blue-600" /> Total clicks</span>
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-green-600" /> Conversions</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm" style={{ background: METRIC_META[metric].color }} /> {METRIC_META[metric].label}</span>
+            {metric !== "conversions" && (
+              <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-green-600" /> Conversions</span>
+            )}
           </div>
         </div>
         <div className="h-[260px] sm:h-[340px]">
@@ -124,12 +139,14 @@ export default function Dashboard() {
                     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                     return `${monthNames[parseInt(m, 10) - 1]} ${parseInt(d, 10)}`;
                   }}
-                  interval={days >= 180 ? Math.floor(days / 10) : days >= 90 ? Math.floor(days / 8) : "preserveStartEnd"}
+                  interval="preserveStartEnd"
                   stroke="#71717a" fontSize={11} tickLine={false} axisLine={false}
                   minTickGap={28} dy={8}
                 />
                 <YAxis yAxisId="l" stroke="#71717a" fontSize={11} tickLine={false} axisLine={false} width={40} />
-                <YAxis yAxisId="r" orientation="right" stroke="#71717a" fontSize={11} tickLine={false} axisLine={false} width={28} />
+                {metric !== "conversions" && (
+                  <YAxis yAxisId="r" orientation="right" stroke="#71717a" fontSize={11} tickLine={false} axisLine={false} width={28} />
+                )}
                 <Tooltip
                   cursor={{ fill: "rgba(37,99,235,0.06)" }}
                   contentStyle={{ borderRadius: 10, border: "1px solid #e4e4e7", fontSize: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.08)", padding: "10px 14px" }}
@@ -141,13 +158,15 @@ export default function Dashboard() {
                     return `${monthNames[parseInt(m, 10) - 1]} ${parseInt(d, 10)}, ${y}`;
                   }}
                 />
-                <Bar yAxisId="l" dataKey="visits" name="Total clicks" fill="#2563eb" radius={[3, 3, 0, 0]} maxBarSize={28} />
-                <Line
-                  yAxisId="r" type="linear" dataKey="conversions" name="Conversions"
-                  stroke="#16a34a" strokeWidth={2.25}
-                  dot={{ r: 3.5, fill: "#16a34a", stroke: "#fff", strokeWidth: 1.5 }}
-                  activeDot={{ r: 5.5, fill: "#16a34a", stroke: "#fff", strokeWidth: 2 }}
-                />
+                <Bar yAxisId="l" dataKey={metric} name={METRIC_META[metric].label} fill={METRIC_META[metric].color} radius={[3, 3, 0, 0]} maxBarSize={28} />
+                {metric !== "conversions" && (
+                  <Line
+                    yAxisId="r" type="linear" dataKey="conversions" name="Conversions"
+                    stroke="#16a34a" strokeWidth={2.25}
+                    dot={{ r: 3.5, fill: "#16a34a", stroke: "#fff", strokeWidth: 1.5 }}
+                    activeDot={{ r: 5.5, fill: "#16a34a", stroke: "#fff", strokeWidth: 2 }}
+                  />
+                )}
               </ComposedChart>
             </ResponsiveContainer>
           ) : (
